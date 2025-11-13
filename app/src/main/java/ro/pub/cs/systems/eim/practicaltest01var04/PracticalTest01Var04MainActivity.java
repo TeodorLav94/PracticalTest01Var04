@@ -23,6 +23,7 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
     private CheckBox checkBox1, checkBox2;
 
     private EditText name_text, group_text;
+    private static final int SECONDARY_ACTIVITY_REQUEST_CODE = 1;
 
 
     @Override
@@ -51,6 +52,8 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
                     text_view.setText(name_text.getText().toString());
                 } else if (checkBox2.isChecked()) {
                     text_view.setText(group_text.getText().toString());
+                } else if (!checkBox1.isChecked() && !checkBox2.isChecked()) {
+                    text_view.setText("");
                 }
             }
         });
@@ -67,10 +70,41 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
             updateStatus(isChecked);
         });
 
+        second_act_btn = (Button)findViewById(R.id.second_activity_button);
+
+        second_act_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text1 = name_text.getText().toString();
+                String text2 = group_text.getText().toString();
+
+                Intent intent = new Intent(PracticalTest01Var04MainActivity.this,
+                        PracticalTest01Var04SecondaryActivity.class);
+
+                intent.putExtra("text1", text1);
+                intent.putExtra("text2", text2);
+
+                startActivityForResult(intent, SECONDARY_ACTIVITY_REQUEST_CODE);
+            }
+        });
+
     }
 
     private void updateStatus(boolean isChecked) {
         String status = isChecked ? "Checked" : "Unchecked";
+    }
+
+    @Override
+    @Deprecated
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SECONDARY_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "OKAY", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "CANCEL", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override

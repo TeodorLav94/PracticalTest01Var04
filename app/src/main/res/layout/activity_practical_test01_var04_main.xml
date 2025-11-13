@@ -43,13 +43,13 @@
 
     <EditText
         android:id="@+id/editText1"
-        android:saveEnabled="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginBottom="14dp"
         android:ems="10"
         android:inputType="text"
+        android:saveEnabled="false"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/editText2"
         app:layout_constraintStart_toStartOf="@+id/editText2" />
@@ -62,8 +62,8 @@
         android:layout_marginTop="1dp"
         android:ems="10"
         android:inputType="text"
-        android:text=""
         android:saveEnabled="false"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/checkBox2"
         app:layout_constraintTop_toTopOf="@+id/checkBox2" />
 
@@ -85,8 +85,8 @@
         android:layout_height="36dp"
         android:layout_marginStart="14dp"
         android:layout_marginTop="299dp"
-        android:text=""
         android:saveEnabled="false"
+        android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
