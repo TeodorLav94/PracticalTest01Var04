@@ -1,6 +1,8 @@
 package ro.pub.cs.systems.eim.practicaltest01var04;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,10 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
     private EditText name_text, group_text;
     private static final int SECONDARY_ACTIVITY_REQUEST_CODE = 1;
 
+    private android.content.BroadcastReceiver messageReceiver;
+
+    private boolean serviceStarted = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
                     text_view.setText("error");
                 } else if (checkBox1.isChecked() && checkBox2.isChecked()) {
                     text_view.setText(name_text.getText().toString() + " " + group_text.getText().toString());
+                    //checkAndStartService();
                 } else if (checkBox1.isChecked()) {
                     text_view.setText(name_text.getText().toString());
                 } else if (checkBox2.isChecked()) {
@@ -94,6 +101,27 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
         String status = isChecked ? "Checked" : "Unchecked";
     }
 
+//    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        android.content.IntentFilter filter = new android.content.IntentFilter();
+//        filter.addAction(PracticalTest01Var04Service.ACTION_1);
+//        filter.addAction(PracticalTest01Var04Service.ACTION_2);
+//        filter.addAction(PracticalTest01Var04Service.ACTION_3);
+//        if (Build.VERSION.SDK_INT >= 33) {
+//            registerReceiver(messageReceiver, filter, RECEIVER_NOT_EXPORTED);
+//        } else {
+//            registerReceiver(messageReceiver, filter);
+//        }
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        unregisterReceiver(messageReceiver);
+//        super.onPause();
+//    }
+
     @Override
     @Deprecated
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -106,6 +134,17 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void checkAndStartService() {
+
+        Intent serviceIntent = new Intent(getApplicationContext(), PracticalTest01Var04Service.class);
+        serviceIntent.putExtra("NUMBER_1", text_view.getText().toString());
+        serviceIntent.putExtra("NUMBER_2", name_text.getText().toString());
+        startService(serviceIntent);
+        serviceStarted = true;
+        Toast.makeText(this, "Service started", Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
